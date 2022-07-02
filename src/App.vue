@@ -6,6 +6,9 @@
     const onClose = () => {
         console.log('close from parent')
     }
+    const onOpen = () => {
+        console.log('open from parent')
+    }
 
     const modal = ref(null)
     const openModal = () => modal.value.open()
@@ -26,6 +29,7 @@
             :close-on-esc="true"
             :close-on-overlay="true"
             @onClose="onClose"
+            @onOpen="onOpen"
             ref="modal">
 
         <div class="modal">
@@ -41,8 +45,8 @@
             @onClose="onClose"
             ref="modal2">
 
-        <div class="modal">
-            ergerg rgsdfdf
+        <div>
+            <img src="https://images.unsplash.com/photo-1524511498335-b0ed6b8e9a69?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2413&q=80" alt="woman" width="650">
         </div>
 
     </TvbirdModal>

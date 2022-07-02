@@ -1,29 +1,40 @@
 <script setup>
     import { ref, watch } from 'vue'
 
-    const emit  = defineEmits(['onClose'])
+    const emit  = defineEmits(['onOpen', 'onClose'])  // События
+
     const props = defineProps({
         closeOnEsc: {type: Boolean, default: true},       // Закрытие по нажатию на Escape
-        closeOnOverlay: {type: Boolean, default: true},  // Закрытие при клике на оверлей
+        closeOnOverlay: {type: Boolean, default: true},   // Закрытие при клике на оверлей
+        overlayBackground: {type: String, default: 'rgba(0, 0, 0, .8)'}   // Цвет заднего фона
     })
 
     const show = ref(false)             // Текущее состояние
     const overlayShowing = ref(false)   // Если показан оверлей
 
+    const isClosed = ref(false)         // Закрыто окно или нет (срабатывает до таймаута)
+    const isCloseDelayed = ref(false)   // Закрыто окно или нет (срабатывает через 50 мс после isClosed)
+
+
     // Показ модального окна
     const open = () => {
         show.value = true
-        setTimeout(() => overlayShowing.value = true, 50)
+
+        setTimeout(() => {
+            overlayShowing.value = true
+            emit('onOpen')
+        }, 50)
     }
 
     // Закрытие окна
-    const isClosed = ref(false)
     const close = () => {
         isClosed.value = true
 
+        setTimeout(() => isCloseDelayed.value = true, 50)
         setTimeout(() => {
             overlayShowing.value = false
             isClosed.value = false
+            isCloseDelayed.value = false
             show.value = false
 
             emit('onClose')
@@ -55,11 +66,15 @@
 
 
 <template>
-    <div class="tvbird-modal-overlay" @click="closeOnOverlay" v-if="show"
-         :class="{'tvbird-modal-overlay--show': overlayShowing, 'tvbird-modal-overlay--hide': isClosed}">
+    <div class="tvbird-modal-overlay"
+         @click="closeOnOverlay"
+         v-if="show"
+         :style="{ background: [props.overlayBackground] }"
+         :class="{'tvbird-modal-overlay--show': overlayShowing, 'tvbird-modal-overlay--hide': isCloseDelayed}">
 
         <div class="tvbird-modal-content">
-            <div class="tvbird-modal-window" @click.stop
+            <div class="tvbird-modal-window"
+                 @click.stop
                  :class="{'tvbird-modal-window--show' : overlayShowing, 'tvbird-modal-window--hide': isClosed}">
 
                 <slot />
@@ -68,14 +83,8 @@
         </div>
 
     </div>
-
 </template>
 
-<style>
-    :root {
-        --tvbird-modal-overlay: rgba(0,0,0,.8);
-    }
-</style>
 
 
 <style lang="scss">
@@ -96,8 +105,8 @@
             }
 
             &--hide {
-                opacity: 0 !important;
-                transform: scale(1.5) !important;
+                opacity: 0;
+                transform: scale(1.5);
             }
         }
 
@@ -119,7 +128,6 @@
             top: 0;
             right: 0;
             bottom: 0;
-            background-color: var(--tvbird-modal-overlay);
             text-align: left;
             opacity: 0;
             transition: opacity $time $easing;
