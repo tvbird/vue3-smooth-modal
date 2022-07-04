@@ -1,7 +1,7 @@
 <script setup>
     import { ref, watch } from 'vue'
 
-    const emit  = defineEmits(['onOpen', 'onClose'])  // События
+    const emit  = defineEmits(['opened', 'closed'])  // События
 
     const props = defineProps({
         closeOnEsc: {type: Boolean, default: true},       // Закрытие по нажатию на Escape
@@ -22,7 +22,7 @@
 
         setTimeout(() => {
             overlayShowing.value = true
-            emit('onOpen')
+            emit('opened')
         }, 50)
     }
 
@@ -37,7 +37,7 @@
             isCloseDelayed.value = false
             show.value = false
 
-            emit('onClose')
+            emit('closed')
         }, 700)
     }
 

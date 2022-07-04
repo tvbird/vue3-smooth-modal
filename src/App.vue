@@ -1,6 +1,5 @@
 <script setup>
     import { ref } from 'vue'
-    import HelloWorld from './components/HelloWorld.vue'
     import TvbirdModal from './components/TvbirdModal.vue'
 
     const onClose = () => {
@@ -20,16 +19,22 @@
 </script>
 
 <template>
-    <HelloWorld msg="Hello Vue 3 + Vite" />
-    <div @click="openModal">Открыть модальное окно</div>
-    <div @click="openModal2">Открыть модальное окно 2</div>
+
+    <div class="container mx-auto mt-16 px-4 lg:w-9/12">
+        <div class="p-8 bg-white rounded-md">
+            <div @click="openModal">Открыть модальное окно</div>
+            <div @click="openModal2">Открыть модальное окно 2</div>
+        </div>
+    </div>
+
 
 
     <TvbirdModal
             :close-on-esc="true"
             :close-on-overlay="true"
-            @onClose="onClose"
-            @onOpen="onOpen"
+            @closed="onClose"
+            @opened="onOpen"
+            overlayBackground="rgba(0, 0, 0, .55)"
             ref="modal">
 
         <div class="modal">
@@ -39,10 +44,11 @@
     </TvbirdModal>
 
 
+
     <TvbirdModal
-            :close-on-esc="true"
-            :close-on-overlay="true"
-            @onClose="onClose"
+            close-on-esc
+            close-on-overlay="false"
+            @closed="onClose"
             ref="modal2">
 
         <div>
@@ -63,5 +69,6 @@
     body {
         font-family: 'Roboto', sans-serif;
         font-weight: 400;
+        background-color: #f3f7ff;
     }
 </style>
