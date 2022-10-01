@@ -95,7 +95,7 @@
         &-window {
             box-sizing: border-box;
 
-            transform: scale(.3);
+            transform: scale(.6);
             opacity: 0;
             transition: all $time - .1s $easing;
 
