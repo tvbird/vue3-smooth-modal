@@ -1,20 +1,19 @@
 <script setup>
-    import { ref, watch } from 'vue'
+    import { ref, watch } from "vue"
 
-    const emit  = defineEmits(['opened', 'closed'])  // События
+    const emit = defineEmits(["opened", "closed"]) // События
 
     const props = defineProps({
-        closeOnEsc: {type: Boolean, default: true},       // Закрытие по нажатию на Escape
-        closeOnOverlay: {type: Boolean, default: true},   // Закрытие при клике на оверлей
-        overlayBackground: {type: String, default: 'rgba(0, 0, 0, .8)'}   // Цвет заднего фона
+        closeOnEsc: { type: Boolean, default: true }, // Закрытие по нажатию на Escape
+        closeOnOverlay: { type: Boolean, default: true }, // Закрытие при клике на оверлей
+        overlayBackground: { type: String, default: "rgba(0, 0, 0, .8)" } // Цвет заднего фона
     })
 
-    const show = ref(false)             // Текущее состояние
-    const overlayShowing = ref(false)   // Если показан оверлей
+    const show = ref(false) // Текущее состояние
+    const overlayShowing = ref(false) // Если показан оверлей
 
-    const isClosed = ref(false)         // Закрыто окно или нет (срабатывает до таймаута)
-    const isCloseDelayed = ref(false)   // Закрыто окно или нет (срабатывает через 50 мс после isClosed)
-
+    const isClosed = ref(false) // Закрыто окно или нет (срабатывает до таймаута)
+    const isCloseDelayed = ref(false) // Закрыто окно или нет (срабатывает через 50 мс после isClosed)
 
     // Показ модального окна
     const open = () => {
@@ -22,7 +21,7 @@
 
         setTimeout(() => {
             overlayShowing.value = true
-            emit('opened')
+            emit("opened")
         }, 50)
     }
 
@@ -30,29 +29,27 @@
     const close = () => {
         isClosed.value = true
 
-        setTimeout(() => isCloseDelayed.value = true, 50)
+        setTimeout(() => (isCloseDelayed.value = true), 50)
         setTimeout(() => {
             overlayShowing.value = false
             isClosed.value = false
             isCloseDelayed.value = false
             show.value = false
 
-            emit('closed')
+            emit("closed")
         }, 700)
     }
 
     // Закрытие по клику на Overlay
-    const closeOnOverlay = () => (props.closeOnOverlay) ? close() : false
+    const closeOnOverlay = () => (props.closeOnOverlay ? close() : false)
 
     // Закрытие окна по Esc
     if (props.closeOnEsc) {
-        const onEscape = e => (show.value && e.keyCode === 27) ? close() : false
+        const onEscape = (e) => (show.value && e.keyCode === 27 ? close() : false)
 
-        watch(show, val => {
-            if (val)
-                document.addEventListener('keydown', onEscape)
-            else
-                document.removeEventListener('keydown', onEscape)
+        watch(show, (val) => {
+            if (val) document.addEventListener("keydown", onEscape)
+            else document.removeEventListener("keydown", onEscape)
         })
     }
 
@@ -63,41 +60,37 @@
     })
 </script>
 
-
-
 <template>
-    <div class="tvbird-modal-overlay"
-         @click="closeOnOverlay"
-         v-if="show"
-         :style="{ background: [props.overlayBackground] }"
-         :class="{'tvbird-modal-overlay--show': overlayShowing, 'tvbird-modal-overlay--hide': isCloseDelayed}">
-
+    <div
+        v-if="show"
+        class="tvbird-modal-overlay"
+        :style="{ background: [props.overlayBackground] }"
+        :class="{ 'tvbird-modal-overlay--show': overlayShowing, 'tvbird-modal-overlay--hide': isCloseDelayed }"
+        @click="closeOnOverlay"
+    >
         <div class="tvbird-modal-content">
-            <div class="tvbird-modal-window"
-                 @click.stop
-                 :class="{'tvbird-modal-window--show' : overlayShowing, 'tvbird-modal-window--hide': isClosed}">
-
+            <div
+                class="tvbird-modal-window"
+                :class="{ 'tvbird-modal-window--show': overlayShowing, 'tvbird-modal-window--hide': isClosed }"
+                @click.stop
+            >
                 <slot />
-
             </div>
         </div>
-
     </div>
 </template>
 
-
-
 <style lang="scss">
-    $time: .7s;
+    $time: 0.7s;
     $easing: ease;
 
     .tvbird-modal {
         &-window {
             box-sizing: border-box;
 
-            transform: scale(.6);
+            transform: scale(0.6);
             opacity: 0;
-            transition: all $time - .1s $easing;
+            transition: all $time - 0.1s $easing;
 
             &--show {
                 transform: scale(1);
