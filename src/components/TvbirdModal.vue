@@ -1,79 +1,74 @@
 <script setup>
-    import { ref, watch } from "vue"
+    import { ref, watch, onMounted, defineExpose } from "vue"
 
-    const emit = defineEmits(["opened", "closed"]) // События
-
+    const emit = defineEmits(["update:modelValue", "close"]) // События
     const props = defineProps({
+        duration: { type: Number, default: 700 }, // Время анимации
+        easing: { type: String, default: "ease" }, // Эффект анимации
+        modelValue: { type: Boolean, default: false }, // Показывать или нет модальное окно
         closeOnEsc: { type: Boolean, default: true }, // Закрытие по нажатию на Escape
         closeOnOverlay: { type: Boolean, default: true }, // Закрытие при клике на оверлей
         overlayBackground: { type: String, default: "rgba(0, 0, 0, .8)" } // Цвет заднего фона
     })
 
-    const show = ref(false) // Текущее состояние
-    const overlayShowing = ref(false) // Если показан оверлей
+    const reOverlay = ref(null)
+    const reModal = ref(null)
 
-    const isClosed = ref(false) // Закрыто окно или нет (срабатывает до таймаута)
-    const isCloseDelayed = ref(false) // Закрыто окно или нет (срабатывает через 50 мс после isClosed)
+    const onEscape = (e) => (props.modelValue && e.keyCode === 27 ? close() : false)
 
-    // Показ модального окна
-    const open = () => {
-        show.value = true
-
-        setTimeout(() => {
-            overlayShowing.value = true
-            emit("opened")
-        }, 50)
-    }
-
-    // Закрытие окна
+    const durCalc = (value) => (value > 100 ? value - 100 : value)
     const close = () => {
-        isClosed.value = true
+        reOverlay.value.animate({ opacity: [1, 0] }, { duration: props.duration, easing: props.easing, fill: "backwards" })
+        reModal.value.animate(
+            { opacity: [1, 0], transform: ["scale(1.5)"] },
+            { duration: durCalc(props.duration), easing: props.easing, fill: "backwards" }
+        ).onfinish = () => {
+            if (props.closeOnEsc) document.removeEventListener("keydown", onEscape)
 
-        setTimeout(() => (isCloseDelayed.value = true), 50)
-        setTimeout(() => {
-            overlayShowing.value = false
-            isClosed.value = false
-            isCloseDelayed.value = false
-            show.value = false
-
-            emit("closed")
-        }, 700)
+            emit("update:modelValue", false)
+            emit("close")
+        }
     }
 
-    // Закрытие по клику на Overlay
-    const closeOnOverlay = () => (props.closeOnOverlay ? close() : false)
-
-    // Закрытие окна по Esc
-    if (props.closeOnEsc) {
-        const onEscape = (e) => (show.value && e.keyCode === 27 ? close() : false)
-
-        watch(show, (val) => {
-            if (val) document.addEventListener("keydown", onEscape)
-            else document.removeEventListener("keydown", onEscape)
-        })
+    const closeOverlay = () => {
+        if (props.closeOnOverlay) close()
     }
 
-    // Экспорт
-    defineExpose({
-        open,
-        close
+    const open = () => {
+        reOverlay.value.animate({ opacity: [0, 1] }, { duration: props.duration, easing: props.easing, fill: "forwards" })
+        reModal.value.animate(
+            { opacity: [0, 1], transform: ["scale(0.7)", "scale(1.0)"] },
+            { duration: durCalc(props.duration), easing: props.easing, fill: "forwards" }
+        ).onfinish = () => {
+            if (props.closeOnEsc) document.addEventListener("keydown", onEscape)
+        }
+    }
+
+    watch(
+        () => props.modelValue,
+        (val) => {
+            if (val) open()
+            else close()
+        }
+    )
+
+    onMounted(() => {
+        if (props.modelValue) open()
     })
+
+    defineExpose({ open, close })
 </script>
 
 <template>
     <div
-        v-if="show"
+        v-show="modelValue"
+        ref="reOverlay"
         class="tvbird-modal-overlay"
         :style="{ background: [props.overlayBackground] }"
-        :class="{ 'tvbird-modal-overlay--show': overlayShowing, 'tvbird-modal-overlay--hide': isCloseDelayed }"
-        @click="closeOnOverlay"
+        @click="closeOverlay"
     >
         <div class="tvbird-modal-content">
-            <div
-                class="tvbird-modal-window"
-                :class="{ 'tvbird-modal-window--show': overlayShowing, 'tvbird-modal-window--hide': isClosed }"
-                @click.stop
-            >
+            <div ref="reModal" class="tvbird-modal-window" @click.stop>
                 <slot />
             </div>
         </div>
@@ -81,26 +76,11 @@
 </template>
 
 <style lang="scss">
-    $time: 0.7s;
-    $easing: ease;
-
     .tvbird-modal {
         &-window {
             box-sizing: border-box;
-
-            transform: scale(0.6);
+            transform: scale(0.7);
             opacity: 0;
-            transition: all $time - 0.1s $easing;
-
-            &--show {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            &--hide {
-                opacity: 0;
-                transform: scale(1.5);
-            }
         }
 
         &-content {
@@ -123,15 +103,6 @@
             bottom: 0;
             text-align: left;
             opacity: 0;
-            transition: opacity $time $easing;
-
-            &--show {
-                opacity: 1;
-            }
-
-            &--hide {
-                opacity: 0;
-            }
         }
     }
 </style>
