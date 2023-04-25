@@ -47,7 +47,6 @@
 
     <TvbirdModal
             close-on-esc
-            close-on-overlay="false"
             @closed="onClose"
             ref="modal2">
 
