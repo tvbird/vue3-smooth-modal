@@ -24,13 +24,7 @@
 
     {{ modal }}
 
-    <TvbirdModal
-        v-model="modal"
-        :close-on-esc="true"
-        :close-on-overlay="true"
-        overlay-background="rgba(0, 0, 0, .55)"
-        @close="onClose"
-    >
+    <TvbirdModal v-model="modal" style="--tvbird-modal-overlay: rgba(0, 0, 0, 0.55)" @close="onClose">
         <div class="modal">пдлв ыта лвыта ылтцщшутаыла дыдвалтт ывлдьылдв</div>
     </TvbirdModal>
 
