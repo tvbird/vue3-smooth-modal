@@ -2,7 +2,7 @@
     import { ref } from "vue"
     import TvbirdModal from "./components/TvbirdModal.vue"
 
-    const modal = ref(true) // First Modal
+    const modal = ref(false) // First Modal
     const modal2 = ref(false) // Second Modal
 
     const onClose = () => {
@@ -25,10 +25,10 @@
     {{ modal }}
 
     <TvbirdModal v-model="modal" style="--tvbird-modal-overlay: rgba(0, 0, 0, 0.55)" @close="onClose">
-        <div class="modal">пдлв ыта лвыта ылтцщшутаыла дыдвалтт ывлдьылдв</div>
+        <div class="modal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, ratione.</div>
     </TvbirdModal>
 
-    <TvbirdModal v-model="modal2" close-on-esc :duration="700" @close="onClose">
+    <TvbirdModal v-model="modal2" :close-on-esc="false" :duration="700" :is-image="true" @close="onClose">
         <div>
             <img
                 src="https://images.unsplash.com/photo-1524511498335-b0ed6b8e9a69?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2413&q=80"

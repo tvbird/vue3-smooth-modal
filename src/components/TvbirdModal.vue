@@ -7,10 +7,13 @@
         easing: { type: String, default: "ease" }, // Эффект анимации
         modelValue: { type: Boolean, default: false }, // Показывать или нет модальное окно
         closeOnEsc: { type: Boolean, default: true }, // Закрытие по нажатию на Escape
-        closeOnOverlay: { type: Boolean, default: true } // Закрытие при клике на оверлей
+        closeOnOverlay: { type: Boolean, default: true }, // Закрытие при клике на оверлей
+        isImage: { type: Boolean, default: false } // Это изображение?
     })
 
     let canUse = true
+    let lastImg = ""
+    let imgLoaded = ref(false)
     const model = ref(props.modelValue)
     const reOverlay = ref(null)
     const reModal = ref(null)
@@ -43,12 +46,32 @@
         if (props.closeOnOverlay) close()
     }
 
-    const open = () => {
+    const preloadImage = (url) => {
+        return new Promise((resolve) => {
+            const img = new Image()
+            img.onload = () => resolve(url)
+            img.src = url
+            img.remove()
+        })
+    }
+
+    const open = async () => {
         if (!canUse) return false
 
         canUse = false
         model.value = true
         reOverlay.value.animate({ opacity: [0, 1] }, { duration: props.duration, easing: props.easing, fill: "forwards" })
+
+        if (props.isImage) {
+            const img = reModal.value.querySelector("img")
+            if (img && lastImg !== img.src) {
+                await preloadImage(img.src)
+                lastImg = img.src
+                imgLoaded.value = true
+                console.warn(imgLoaded.value)
+            }
+        }
+
         reModal.value.animate(
             { opacity: [0, 1], transform: ["scale(0.7)", "scale(1.0)"] },
             { duration: durCalc(props.duration), easing: props.easing, fill: "forwards" }
@@ -78,6 +101,42 @@
             <div ref="reModal" class="tvbird-modal-window" @click.stop>
                 <slot />
             </div>
+
+            <slot v-if="isImage && !imgLoaded" name="load">
+                <div class="tvbird-modal-preloader">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                        <circle fill="none" stroke-opacity="1" stroke="#FFFFFF" stroke-width=".5" cx="100" cy="100" r="0">
+                            <animate
+                                attributeName="r"
+                                calcMode="spline"
+                                dur="2"
+                                values="1;80"
+                                keyTimes="0;1"
+                                keySplines="0 .2 .5 1"
+                                repeatCount="indefinite"
+                            ></animate>
+                            <animate
+                                attributeName="stroke-width"
+                                calcMode="spline"
+                                dur="2"
+                                values="0;25"
+                                keyTimes="0;1"
+                                keySplines="0 .2 .5 1"
+                                repeatCount="indefinite"
+                            ></animate>
+                            <animate
+                                attributeName="stroke-opacity"
+                                calcMode="spline"
+                                dur="2"
+                                values="1;0"
+                                keyTimes="0;1"
+                                keySplines="0 .2 .5 1"
+                                repeatCount="indefinite"
+                            ></animate>
+                        </circle>
+                    </svg>
+                </div>
+            </slot>
         </div>
     </div>
 </template>
@@ -116,6 +175,12 @@
             opacity: 0;
             background: var(--tvbird-modal-overlay);
             box-shadow: var(--tvbird-modal-box-shadow);
+        }
+
+        &-preloader {
+            position: fixed;
+            width: 40px;
+            height: 40px;
         }
     }
 </style>
