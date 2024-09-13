@@ -143,9 +143,9 @@
 
 <style lang="scss">
     :root {
-        --tvbird-modal-box-shadow: inset 6px -6px 218px 7px #ffffff4d;
-        --tvbird-modal-overlay: rgba(0, 0, 0, 0.35);
+        --tvbird-modal-overlay: rgba(0, 0, 0, 0.16);
     }
+
     .tvbird-modal {
         &-window {
             box-sizing: border-box;
@@ -174,7 +174,6 @@
             text-align: left;
             opacity: 0;
             background: var(--tvbird-modal-overlay);
-            box-shadow: var(--tvbird-modal-box-shadow);
         }
 
         &-preloader {
