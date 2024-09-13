@@ -4,8 +4,9 @@
     import TmpForm from "@/components/TmpForm.vue"
 
     const modal = ref(false) // First Modal
-    const customBackground = ref(false) // Second Modal
     const modal2 = ref(false) // Second Modal
+    const customBackground = ref(false) // Second Modal
+    const reCustomBackground = ref(null)
 
     const onClose = () => {
         console.log("close")
@@ -28,10 +29,15 @@
     </TvbirdModal>
 
     <!--Custom Background-->
-    <TvbirdModal v-model="customBackground" style="--tvbird-modal-overlay: rgb(239 192 222 / 25%)">
+    <TvbirdModal
+        ref="reCustomBackground"
+        v-model="customBackground"
+        style="--tvbird-modal-overlay: rgb(239 192 222 / 25%)"
+        @close="onClose"
+    >
         <TmpForm class="modal">
             <div class="mt-3">
-                <a href="#" class="a--blue font-medium text-sm" @click.prevent="customBackground = false">Close Modal</a>
+                <a href="#" class="a--blue font-medium text-sm" @click.prevent="reCustomBackground.close()">Close Modal</a>
             </div>
         </TmpForm>
     </TvbirdModal>

@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, watch, onMounted } from "vue"
+    import { ref, watch, onMounted, nextTick } from "vue"
 
     const emit = defineEmits(["update:modelValue", "close"]) // События
     const props = defineProps({
@@ -23,7 +23,7 @@
 
     const durCalc = (value) => (value > 100 ? value - 100 : value)
 
-    const close = () => {
+    const close = (enableEmitOnClose = true) => {
         if (!canUse) return false
 
         canUse = false
@@ -35,7 +35,8 @@
             if (props.closeOnEsc) document.removeEventListener("keydown", onEscape)
 
             emit("update:modelValue", false)
-            emit("close")
+            if (enableEmitOnClose) emit("close")
+
             model.value = false
             canUse = true
         }
@@ -83,9 +84,9 @@
 
     watch(
         () => props.modelValue,
-        (val) => {
-            if (val) open()
-            else close()
+        async (val) => {
+            if (!val) close(false)
+            else await nextTick(open)
         }
     )
 
@@ -93,10 +94,12 @@
         if (!canUse) return false
         if (props.modelValue) open()
     })
+
+    defineExpose({ close })
 </script>
 
 <template>
-    <div v-show="model" ref="reOverlay" class="tvbird-modal-overlay" @click="closeOverlay">
+    <div v-show="model" v-if="modelValue" ref="reOverlay" class="tvbird-modal-overlay" @click="closeOverlay">
         <div class="tvbird-modal-content">
             <div ref="reModal" class="tvbird-modal-window" @click.stop>
                 <slot />
