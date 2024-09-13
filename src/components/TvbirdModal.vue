@@ -29,7 +29,7 @@
         canUse = false
         reOverlay.value.animate({ opacity: [1, 0] }, { duration: props.duration, easing: props.easing, fill: "backwards" })
         reModal.value.animate(
-            { opacity: [1, 0], transform: ["scale(1.5)"] },
+            { opacity: [1, 0], transform: ["scale(1.3)"] },
             { duration: durCalc(props.duration), easing: props.easing, fill: "backwards" }
         ).onfinish = () => {
             if (props.closeOnEsc) document.removeEventListener("keydown", onEscape)
@@ -102,7 +102,7 @@
                 <slot />
             </div>
 
-            <slot v-if="isImage && !imgLoaded" name="load">
+            <slot v-if="isImage && !imgLoaded" name="preloader">
                 <div class="tvbird-modal-preloader">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
                         <circle fill="none" stroke-opacity="1" stroke="#FFFFFF" stroke-width=".5" cx="100" cy="100" r="0">
@@ -150,6 +150,7 @@
         &-window {
             box-sizing: border-box;
             transform: scale(0.7);
+            will-change: transform;
             opacity: 0;
         }
 

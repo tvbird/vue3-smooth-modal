@@ -10,19 +10,15 @@
     const onClose = () => {
         console.log("close")
     }
-
-    setTimeout(() => {
-        modal.value = false
-    }, 1000)
 </script>
 
 <template>
     <div class="container mx-auto mt-16 px-4 lg:w-9/12 space-y-5">
         <h1 class="text-2xl font-light">Vue 3 Smooth Modal</h1>
-        <ul class="p-8 bg-white rounded-md flex flex-col gap-x-10 gap-y-4 lg:flex-row">
+        <ul class="p-8 bg-white rounded-md flex flex-col gap-x-10 gap-y-4 lg:flex-row font-medium">
             <li><a href="#" @click.prevent="modal = true">Simple modal</a></li>
-            <li><a href="#" @click="customBackground = true">Custom background</a></li>
             <li><a href="#" @click="modal2 = true">Image modal</a></li>
+            <li><a href="#" @click="customBackground = true">Custom background</a></li>
         </ul>
     </div>
 
@@ -32,8 +28,12 @@
     </TvbirdModal>
 
     <!--Custom Background-->
-    <TvbirdModal v-model="customBackground" style="--tvbird-modal-overlay: rgba(239, 192, 192, 0.35)">
-        <TmpForm class="modal" />
+    <TvbirdModal v-model="customBackground" style="--tvbird-modal-overlay: rgb(239 192 222 / 25%)">
+        <TmpForm class="modal">
+            <div class="mt-3">
+                <a href="#" class="a--blue font-medium text-sm" @click.prevent="customBackground = false">Close Modal</a>
+            </div>
+        </TmpForm>
     </TvbirdModal>
 
     <!--Image Modal Preload-->
@@ -50,7 +50,8 @@
     body {
         font-family: "Open Sans", sans-serif;
         font-weight: 400;
-        background-color: #f3f7ff;
+        background: linear-gradient(180deg, #f1f8ff, #fff);
+        background-size: 100vw 100vh;
     }
 
     .modal {
@@ -59,6 +60,10 @@
         padding: 30px;
         background-color: #fff;
         border-radius: 5px;
+    }
+
+    .a--blue {
+        color: #007bff;
     }
 
     a {

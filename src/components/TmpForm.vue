@@ -13,5 +13,7 @@
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum exercitationem laboriosam numquam omnis vitae. Consequatur
             dolores facere omnis reiciendis repellat!
         </p>
+
+        <slot />
     </div>
 </template>
