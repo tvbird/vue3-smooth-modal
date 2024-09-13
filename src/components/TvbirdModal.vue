@@ -13,6 +13,7 @@
 
     let canUse = true
     let lastImg = ""
+
     let imgLoaded = ref(false)
     const model = ref(props.modelValue)
     const reOverlay = ref(null)
@@ -68,7 +69,6 @@
                 await preloadImage(img.src)
                 lastImg = img.src
                 imgLoaded.value = true
-                console.warn(imgLoaded.value)
             }
         }
 
