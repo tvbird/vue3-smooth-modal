@@ -1,6 +1,6 @@
 <script setup>
     import { ref } from "vue"
-    import TvbirdModal from "./components/TvbirdModal.vue"
+    import TvbirdModal from "./lib/TvbirdModal.vue"
     import TmpForm from "@/components/TmpForm.vue"
 
     const modal = ref(false) // First Modal

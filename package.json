@@ -1,8 +1,24 @@
 {
-  "name": "vue3-smooth-modal",
-  "version": "0.0.0",
+  "name": "vue-smooth-modal",
+  "author": "Tvbird",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
+  "license": "MIT",
+  "main": "./dist/tvbird-modal.umd.js",
+  "module": "./dist/tvbird-modal.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/tvbird-modal.es.js",
+      "require": "./dist/tvbird-modal.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "keywords": ["vue", "vue3", "component", "library", "modal", "window", "form"],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -24,6 +40,7 @@
     "prettier": "^3.3.3",
     "sass": "^1.78.0",
     "tailwindcss": "^3.4.11",
+    "terser": "^5.32.0",
     "vite": "^5.4.5"
   }
 }
