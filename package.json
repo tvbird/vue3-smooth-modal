@@ -2,7 +2,6 @@
   "name": "vue-smooth-modal",
   "author": "Tvbird",
   "version": "0.0.1",
-  "private": true,
   "type": "module",
   "license": "MIT",
   "main": "./dist/smooth-modal.umd.js",
