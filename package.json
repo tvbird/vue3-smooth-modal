@@ -24,7 +24,8 @@
     "library",
     "modal",
     "window",
-    "form"
+    "form",
+    "dialog"
   ],
   "scripts": {
     "dev": "vite",

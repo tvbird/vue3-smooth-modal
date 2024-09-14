@@ -21,6 +21,13 @@
             <li><a href="#" @click="customBackground = true">Custom background</a></li>
             <li><a href="#" @click="modalVideo = true">Video modal</a></li>
         </ul>
+
+        <footer>
+            <ul class="flex gap-x-6 gap-y-2 justify-center text-[13px] font-medium">
+                <li><a href="https://github.com/tvbird/vue3-smooth-modal" target="_blank" class="text-gray-400">Github</a></li>
+                <li><a href="https://www.npmjs.com/package/vue-smooth-modal" target="_blank" class="text-gray-400">Npm</a></li>
+            </ul>
+        </footer>
     </div>
 
     <!--First Modal-->
