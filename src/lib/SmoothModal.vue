@@ -152,9 +152,9 @@
 
             <slot v-if="showClose" name="close">
                 <div class="tvbird-modal-close">
-                    <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
-                            d="M420.875 76L262.625 233.875L105.125 76.75L83 98.875L240.5 256L83 413.125L105.125 435.25L262.625 278.125L420.875 436L443 413.875L284.75 256L443 98.125L420.875 76Z"
+                            d="M24.6606 4.45312L15.3882 13.7036L6.15967 4.49707L4.86328 5.79346L14.0918 15L4.86328 24.2065L6.15967 25.5029L15.3882 16.2964L24.6606 25.5469L25.957 24.2505L16.6846 15L25.957 5.74951L24.6606 4.45312Z"
                             fill="white"
                         />
                     </svg>
@@ -203,11 +203,15 @@
 
         &-close {
             position: absolute;
-            top: 0.5rem;
+            top: 1.5rem;
             right: 2.5rem;
-            width: 2em;
-            height: 2em;
-            transform: scale(0.05);
+            width: 30px;
+            height: 30px;
+            transition: ease-in-out 0.3s;
+
+            &:hover {
+                transform: scale(1.5);
+            }
         }
 
         &-preloader {

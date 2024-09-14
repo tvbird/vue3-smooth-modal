@@ -12,10 +12,18 @@ Vue 3 Smooth Modal is a modal window package designed for Vue 3 that provides ex
 | showClose      | Boolean |    `true`     | Display the modal close icon                                               |
 | closeOnEsc     | Boolean |    `true`     | Close the modal by pressing the Esc key                                    |
 | closeOnOverlay | Boolean |    `true`     | Close the modal by clicking on the overlay                                 |
-| isImage        | Boolean |    `false`    | Image inside. Image preloading with an SVG preloader.                      |
+| isImage        | Boolean |    `false`    | Image inside. Image preloading with an SVG preloader                       |
+| useSkeleton    | Boolean |    `false`    | Use a CSS template                                                         |
 
 ## Emits
 
 | Event   | Description                               |
 |:--------|:------------------------------------------|
 | `close` | Triggered when the modal window is closed |    
+
+## Custom slots
+
+| slot name   | description         |
+|:------------|:--------------------|
+| `close`     | Custom close button |
+| `preloader` | Custom preloader    |
