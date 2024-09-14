@@ -9,9 +9,7 @@
     const customBackground = ref(false) // Second Modal
     const reCustomBackground = ref(null)
 
-    const onClose = () => {
-        console.log("close")
-    }
+    const onClose = () => console.log("close")
 </script>
 
 <template>
