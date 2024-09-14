@@ -8,6 +8,7 @@
         modelValue: { type: Boolean, default: false }, // Показывать или нет модальное окно
         closeOnEsc: { type: Boolean, default: true }, // Закрытие по нажатию на Escape
         closeOnOverlay: { type: Boolean, default: true }, // Закрытие при клике на оверлей
+        showClose: { type: Boolean, default: true }, // Показывать ли кнопку закрытия
         isImage: { type: Boolean, default: false } // Это изображение?
     })
 
@@ -141,6 +142,17 @@
                 </div>
             </slot>
         </div>
+
+        <slot v-if="showClose" name="close">
+            <div class="tvbird-modal-close">
+                <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M420.875 76L262.625 233.875L105.125 76.75L83 98.875L240.5 256L83 413.125L105.125 435.25L262.625 278.125L420.875 436L443 413.875L284.75 256L443 98.125L420.875 76Z"
+                        fill="white"
+                    />
+                </svg>
+            </div>
+        </slot>
     </div>
 </template>
 
@@ -178,6 +190,15 @@
             text-align: left;
             opacity: 0;
             background: var(--tvbird-modal-overlay);
+        }
+
+        &-close {
+            position: absolute;
+            top: 0.5rem;
+            right: 2.5rem;
+            width: 2em;
+            height: 2em;
+            transform: scale(0.05);
         }
 
         &-preloader {

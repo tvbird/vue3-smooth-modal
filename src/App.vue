@@ -5,6 +5,7 @@
 
     const modal = ref(false) // First Modal
     const modal2 = ref(false) // Second Modal
+    const modalVideo = ref(false) // Video Modal
     const customBackground = ref(false) // Second Modal
     const reCustomBackground = ref(null)
 
@@ -20,6 +21,7 @@
             <li><a href="#" @click.prevent="modal = true">Simple modal</a></li>
             <li><a href="#" @click="modal2 = true">Image modal</a></li>
             <li><a href="#" @click="customBackground = true">Custom background</a></li>
+            <li><a href="#" @click="modalVideo = true">Video modal</a></li>
         </ul>
     </div>
 
@@ -49,6 +51,15 @@
             alt="woman"
             width="650"
         />
+    </TvbirdModal>
+
+    <!--Video Modal-->
+    <TvbirdModal v-model="modalVideo" @close="onClose">
+        <div class="aspect-video scale-75">
+            <video controls autoplay>
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+            </video>
+        </div>
     </TvbirdModal>
 </template>
 
