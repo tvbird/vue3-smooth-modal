@@ -2,6 +2,10 @@
 
 Vue 3 Smooth Modal is a modal window package designed for Vue 3 that provides exceptionally smooth transitions for showing and hiding modals. Its focus is on delivering a seamless user experience, with fluid animations and effortless integration into any Vue 3 project. This package simplifies the process of managing modals, ensuring both visual appeal and high performance
 
+## Demo
+![ezgif-4-266f7aa836](https://github.com/user-attachments/assets/bb76ba40-d385-4399-bb8c-e33eae01690d)
+
+
 ## Installation
 ```
 npm i vue-smooth-modal
