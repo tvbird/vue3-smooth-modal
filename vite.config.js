@@ -14,8 +14,8 @@ export default defineConfig({
     build: {
         lib: {
             entry: resolve(__dirname, "src/index.js"),
-            name: "TvbirdModal",
-            fileName: (format) => `tvbird-modal.${format}.js`
+            name: "SmoothModal",
+            fileName: (format) => `smooth-modal.${format}.js`
         },
         rollupOptions: {
             external: ["vue"],

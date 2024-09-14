@@ -1,6 +1,6 @@
-import TvbirdModal from "./lib/TvbirdModal.vue"
+import SmoothModal from "./lib/SmoothModal.vue"
 export default {
     install: (app) => {
-        app.component("TvbirdModal", TvbirdModal)
+        app.component("SmoothModal", SmoothModal)
     }
 }

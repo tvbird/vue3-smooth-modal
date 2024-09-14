@@ -5,12 +5,12 @@
   "private": true,
   "type": "module",
   "license": "MIT",
-  "main": "./dist/tvbird-modal.umd.js",
-  "module": "./dist/tvbird-modal.es.js",
+  "main": "./dist/smooth-modal.umd.js",
+  "module": "./dist/smooth-modal.es.js",
   "exports": {
     ".": {
-      "import": "./dist/tvbird-modal.es.js",
-      "require": "./dist/tvbird-modal.umd.js"
+      "import": "./dist/smooth-modal.es.js",
+      "require": "./dist/smooth-modal.umd.js"
     },
     "./dist/style.css": "./dist/style.css"
   },
@@ -18,7 +18,15 @@
     "dist",
     "src"
   ],
-  "keywords": ["vue", "vue3", "component", "library", "modal", "window", "form"],
+  "keywords": [
+    "vue",
+    "vue3",
+    "component",
+    "library",
+    "modal",
+    "window",
+    "form"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",

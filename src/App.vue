@@ -1,6 +1,6 @@
 <script setup>
     import { ref } from "vue"
-    import TvbirdModal from "./lib/TvbirdModal.vue"
+    import SmoothModal from "./lib/SmoothModal.vue"
     import TmpForm from "@/components/TmpForm.vue"
 
     const modal = ref(false) // First Modal
@@ -26,41 +26,36 @@
     </div>
 
     <!--First Modal-->
-    <TvbirdModal v-model="modal" @close="onClose">
-        <TmpForm :short="true" class="modal" />
-    </TvbirdModal>
+    <SmoothModal v-model="modal" :use-skeleton="true" @close="onClose">
+        <TmpForm :short="true" />
+    </SmoothModal>
 
     <!--Custom Background-->
-    <TvbirdModal
-        ref="reCustomBackground"
-        v-model="customBackground"
-        style="--tvbird-modal-overlay: rgb(239 192 222 / 25%)"
-        @close="onClose"
-    >
-        <TmpForm class="modal">
+    <SmoothModal ref="reCustomBackground" v-model="customBackground" :use-skeleton="true" class="custom-background" @close="onClose">
+        <TmpForm>
             <div class="mt-3">
                 <a href="#" class="a--blue font-medium text-sm" @click.prevent="reCustomBackground.close()">Close Modal</a>
             </div>
         </TmpForm>
-    </TvbirdModal>
+    </SmoothModal>
 
     <!--Image Modal Preload-->
-    <TvbirdModal v-model="modal2" :close-on-esc="false" :duration="700" :is-image="true" @close="onClose">
+    <SmoothModal v-model="modal2" :close-on-esc="false" :duration="700" :is-image="true" @close="onClose">
         <img
             src="https://images.unsplash.com/photo-1524511498335-b0ed6b8e9a69?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2413&q=80"
             alt="woman"
             width="650"
         />
-    </TvbirdModal>
+    </SmoothModal>
 
     <!--Video Modal-->
-    <TvbirdModal v-model="modalVideo" @close="onClose">
-        <div class="aspect-video scale-75">
+    <SmoothModal v-model="modalVideo" @close="onClose">
+        <div class="aspect-video">
             <video controls autoplay>
                 <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
             </video>
         </div>
-    </TvbirdModal>
+    </SmoothModal>
 </template>
 
 <style lang="scss">
@@ -71,12 +66,8 @@
         background-size: 100vw 100vh;
     }
 
-    .modal {
-        min-width: 200px;
-        max-width: 900px;
-        padding: 30px;
-        background-color: #fff;
-        border-radius: 5px;
+    .custom-background {
+        --tvbird-modal-overlay: rgb(239 192 222 / 25%);
     }
 
     .a--blue {
