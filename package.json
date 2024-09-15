@@ -1,7 +1,7 @@
 {
   "name": "vue-smooth-modal",
   "author": "Tvbird",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "license": "MIT",
   "main": "./dist/smooth-modal.umd.js",
@@ -27,6 +27,10 @@
     "form",
     "dialog"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tvbird/vue3-smooth-modal.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
