@@ -32,8 +32,9 @@
 
         canUse = false
         reOverlay.value.animate({ opacity: [1, 0] }, { duration: props.duration, easing: props.easing, fill: "backwards" })
+
         reModal.value.animate(
-            { opacity: [1, 0], transform: ["scale(1.3)"] },
+            { opacity: [1, 0], transform: ["scale(1)", "scale(1.5)"] },
             { duration: durCalc(props.duration), easing: props.easing, fill: "backwards" }
         ).onfinish = () => {
             if (props.closeOnEsc) document.removeEventListener("keydown", onEscape)
@@ -199,6 +200,7 @@
             text-align: left;
             opacity: 0;
             background: var(--tvbird-modal-overlay);
+            z-index: 999;
         }
 
         &-close {
