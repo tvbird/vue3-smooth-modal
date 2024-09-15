@@ -1,6 +1,6 @@
 # Vue 3 Smooth Modal
 
-Vue 3 Smooth Modal is a modal window package designed for Vue 3 that provides exceptionally smooth transitions for showing and hiding modals. Its focus is on delivering a seamless user experience, with fluid animations and effortless integration into any Vue 3 project. This package simplifies the process of managing modals, ensuring both visual appeal and high performance
+Vue 3 Smooth Modal is~ a modal window package designed for Vue 3 that provides exceptionally smooth transitions for showing and hiding modals. Its focus is on delivering a seamless user experience, with fluid animations and effortless integration into any Vue 3 project. This package simplifies the process of managing modals, ensuring both visual appeal and high performance
 
 ## Demo
 ![ezgif-4-266f7aa836](https://github.com/user-attachments/assets/bb76ba40-d385-4399-bb8c-e33eae01690d)
@@ -11,7 +11,7 @@ Vue 3 Smooth Modal is a modal window package designed for Vue 3 that provides ex
 npm i vue-smooth-modal
 ```
 
-## Setup
+## Vue 3
 Add dependencies to your main.js:
 
 ```js
@@ -21,6 +21,18 @@ import "vue-smooth-modal/dist/style.css"
 import SmoothModal from "vue-smooth-modal"
 // ...
 app.use(SmoothModal)
+```
+
+## Nuxt 3
+Create ./plugins/vue-smooth-modal.js
+
+```js
+import "vue-smooth-modal/dist/style.css"
+import SmoothModal from "vue-smooth-modal"
+
+export default defineNuxtPlugin((nuxtApp) => {
+    nuxtApp.vueApp.use(SmoothModal)
+})
 ```
 
 
@@ -54,6 +66,7 @@ app.use(SmoothModal)
 </style>
 ```
 
+
 ## Props
 
 | Attribute      |  Type   |    Default    | Description                                                                |
@@ -66,11 +79,13 @@ app.use(SmoothModal)
 | isImage        | Boolean |    `false`    | Image inside. Image preloading with an SVG preloader                       |
 | useSkeleton    | Boolean |    `false`    | Use a CSS template                                                         |
 
+
 ## Emits
 
 | Event   | Description                               |
 |:--------|:------------------------------------------|
 | `close` | Triggered when the modal window is closed |    
+
 
 ## Slots
 
